@@ -208,14 +208,29 @@ veritas/
 | No verifiable claims found | Returns clean "no claims" response instead of crashing |
 | Search returns no results | Claim marked as "Unverified" with 0 confidence |
 
----
-
 ## 📄 License
 
-MIT
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
+## ⚠️ Disclaimer
+
+Veritas is an AI-assisted research tool — **not a definitive source of truth**. AI models can hallucinate, misinterpret context, or produce inaccurate verdicts. Always verify critical claims through primary sources. The developers assume no liability for decisions made based on Veritas outputs.
+
+Third-party content (YouTube videos, web search results) is owned by their respective creators and is accessed solely for analysis purposes under fair use.
+
+---
+
+## 🔒 Privacy
+
+Veritas does **not** store, log, or transmit user-submitted URLs or text to any third party beyond the APIs required for analysis (Groq for AI inference, Tavily for web search). No personal data is collected. All processing happens server-side and results are not persisted.
+
+---
+
+<p align="center">
+  <sub>© 2026 Veritas Contributors · Licensed under MIT</sub>
+</p>
 <p align="center">
   <strong>Built with ☕ and healthy skepticism</strong>
 </p>

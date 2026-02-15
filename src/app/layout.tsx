@@ -19,7 +19,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Veritas — AI-Powered Bullshit Detector",
-  description: "Paste any YouTube video and Veritas will extract claims, fact-check them against trusted sources, and give you a real-time truth score. Built for NorCal Hacks 2026.",
+  description: "Paste any YouTube video and Veritas will extract claims, fact-check them against trusted sources, and give you a real-time truth score. Built for Avalon 2026.",
   keywords: ["fact-check", "misinformation", "AI", "YouTube", "verification", "truth"],
 };
 

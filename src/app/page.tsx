@@ -42,7 +42,7 @@ export default function Home() {
       </div>
 
       <footer className="absolute bottom-6 text-zinc-700 text-sm">
-        Built for NorCal Hacks 2026
+        Built for Avalon 2026
       </footer>
     </main>
   );
