@@ -13,16 +13,14 @@ const groq = new OpenAI({
 });
 
 // Use system /tmp for serverless environments (Vercel, AWS Lambda)
-// In production, /tmp is the only writable directory
-const TEMP_DIR = process.env.VERCEL ? '/tmp' : path.join(process.cwd(), 'tmp');
+// FASE 1 FIX: Always use /tmp for serverless environments (read-only filesystem elsewhere)
+const TEMP_DIR = '/tmp';
 const MAX_AUDIO_SIZE = 25 * 1024 * 1024; // Groq Whisper limit: 25MB
 const YTDLP_TIMEOUT_MS = 90000;
 const YTDLP_MAX_BUFFER = 15 * 1024 * 1024;
 
-// Ensure temp directory exists (only needed in local dev)
-if (!process.env.VERCEL && !fs.existsSync(TEMP_DIR)) {
-    fs.mkdirSync(TEMP_DIR, { recursive: true });
-}
+// Note: /tmp is always writable in serverless (Vercel, Netlify, Railway, etc.)
+// No need to create it - it's provided by the runtime
 
 function findLatestDownloadedFile(runPrefix: string): string | null {
     const files = fs.readdirSync(TEMP_DIR)
@@ -131,11 +129,11 @@ export async function getAudioTranscript(url: string, videoId: string): Promise<
         const transcript = await transcribeAudio(audioPath);
         return transcript;
     } catch (error: unknown) {
-        const err = error instanceof Error ? error : new Error(String(error));
-        const errorMsg = JSON.stringify(err, Object.getOwnPropertyNames(err));
-        fs.writeFileSync(path.join(process.cwd(), 'debug_error.log'), `Audio Pipeline Error: ${errorMsg}\n`);
-        console.error("Audio Pipeline Failed:", err);
-        throw new Error(`Audio Pipeline Error: ${err.message || errorMsg}`);
+        const errorMsg = error instanceof Error ? error.message : JSON.stringify(error, Object.getOwnPropertyNames(error));
+        // FASE 1 FIX: Remove filesystem write to project root (read-only in serverless)
+        // Only log to console - use platform logging (Vercel/Netlify logs) for debugging
+        console.error("[Veritas] Audio Pipeline Failed:", errorMsg);
+        throw new Error(`Audio Pipeline Error: ${errorMsg}`);
     }
 }
 

@@ -1,4 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+
+// FASE 1 FIX: Explicit Node runtime (required for fs, child_process, yt-dlp)
+export const runtime = 'nodejs';
+// FASE 1 FIX: Set max duration for Vercel (60s for Pro, 10s for Hobby)
+export const maxDuration = 60;
 import { getTranscript } from "@/lib/youtube";
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { createOpenAI } from "@ai-sdk/openai";
