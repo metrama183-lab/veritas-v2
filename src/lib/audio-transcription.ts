@@ -12,13 +12,15 @@ const groq = new OpenAI({
     baseURL: "https://api.groq.com/openai/v1",
 });
 
-const TEMP_DIR = path.join(process.cwd(), 'tmp');
+// Use system /tmp for serverless environments (Vercel, AWS Lambda)
+// In production, /tmp is the only writable directory
+const TEMP_DIR = process.env.VERCEL ? '/tmp' : path.join(process.cwd(), 'tmp');
 const MAX_AUDIO_SIZE = 25 * 1024 * 1024; // Groq Whisper limit: 25MB
 const YTDLP_TIMEOUT_MS = 90000;
 const YTDLP_MAX_BUFFER = 15 * 1024 * 1024;
 
-// Ensure temp directory exists
-if (!fs.existsSync(TEMP_DIR)) {
+// Ensure temp directory exists (only needed in local dev)
+if (!process.env.VERCEL && !fs.existsSync(TEMP_DIR)) {
     fs.mkdirSync(TEMP_DIR, { recursive: true });
 }
 
