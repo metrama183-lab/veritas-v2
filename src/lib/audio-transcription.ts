@@ -43,6 +43,12 @@ export async function downloadAudio(url: string, videoId: string): Promise<strin
     // Hardcoded absolute path to the binary to bypass Next.js environment issues
     const binaryPath = path.join(process.cwd(), 'node_modules', 'youtube-dl-exec', 'bin', 'yt-dlp');
 
+    // Diagnostic logging for Vercel debugging
+    console.log('[Veritas] yt-dlp binary path:', binaryPath);
+    console.log('[Veritas] yt-dlp exists:', fs.existsSync(binaryPath));
+    console.log('[Veritas] TEMP_DIR:', TEMP_DIR);
+    console.log('[Veritas] TEMP_DIR exists:', fs.existsSync(TEMP_DIR));
+
     // Try progressively smaller audio formats to stay under Whisper's 25MB limit.
     const formatAttempts = [
         "bestaudio[abr<=64]/bestaudio[abr<=96]/bestaudio/best",
