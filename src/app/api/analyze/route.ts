@@ -743,13 +743,27 @@ No markdown. No bullet points. Just 2 plain sentences.`,
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { url, text } = body;
+        const { url, mode, text } = body;
 
         if (!url && !text) {
             return NextResponse.json(
                 { error: "URL or text content required" },
                 { status: 400 },
             );
+        }
+
+        // DEMO MODE: Always return demo data after realistic loading delay
+        if (mode === "demo") {
+            console.log("[DEMO MODE] Simulating analysis for:", url);
+            await new Promise(resolve => setTimeout(resolve, 3000)); // 3 second fake loading
+
+            return NextResponse.json({
+                ...DEMO_RESPONSE,
+                metadata: {
+                    ...DEMO_RESPONSE.metadata,
+                    url: url, // Use the actual URL provided
+                }
+            });
         }
 
         // ── Demo cache: serve pre-built response for the demo video ──
