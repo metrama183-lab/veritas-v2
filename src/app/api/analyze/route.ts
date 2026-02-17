@@ -756,14 +756,7 @@ export async function POST(req: NextRequest) {
         if (mode === "demo") {
             console.log("[DEMO MODE] Simulating analysis for:", url);
             await new Promise(resolve => setTimeout(resolve, 3000)); // 3 second fake loading
-
-            return NextResponse.json({
-                ...DEMO_RESPONSE,
-                metadata: {
-                    ...DEMO_RESPONSE.metadata,
-                    url: url, // Use the actual URL provided
-                }
-            });
+            return NextResponse.json(DEMO_RESPONSE);
         }
 
         // ── Demo cache: serve pre-built response for the demo video ──
