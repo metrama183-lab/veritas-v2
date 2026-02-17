@@ -82,9 +82,9 @@ function ReportPageContent() {
                 if (mode === "text") {
                     const text = sessionStorage.getItem("veritas_manual_text");
                     if (!text) throw new Error("No text found in session storage.");
-                    body = { text };
+                    body = { text, mode: "demo" };
                 } else {
-                    body = { url: decodeURIComponent(videoUrl!) };
+                    body = { url: decodeURIComponent(videoUrl!), mode: "demo" };
                 }
 
                 const res = await fetch("/api/analyze", {
